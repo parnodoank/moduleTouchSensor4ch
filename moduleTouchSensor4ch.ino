@@ -10,7 +10,7 @@ int const N = 200; //100 , 10, 300
 
 //この20という数字が大きければ鈍感に、小さければ敏感になります
 //Default is 20
-int const STD_TIME = 5; //7, 10
+int const STD_TIME = 5; //10
 // 100, 5 is better?
 
 
@@ -60,7 +60,9 @@ void setup(){
   pinMode(10,INPUT);
   //確認用LED
   pinMode(4, OUTPUT);
-/*
+
+
+
   //IO for C
   //タッチパネル本体
   pinMode(9,OUTPUT);
@@ -68,6 +70,7 @@ void setup(){
   //確認用LED
   pinMode(3, OUTPUT);
 
+/*
   //IO for D
   //タッチパネル本体
   pinMode(7,OUTPUT);
@@ -81,8 +84,8 @@ void loop(){
 
   routine_a();
   routine_b();
-//  routine_c();
-//  routine_d();
+  routine_c();
+  routine_d();
 
 }
 
@@ -113,8 +116,9 @@ void routine_a ()
   //この20という数字が大きければ鈍感に、小さければ敏感になります
   //Default is 20
   if(ave > STD_TIME){
-    digitalWrite(5, HIGH);
+
     if(a_state == 0){
+      digitalWrite(5, HIGH);
       Serial.println("touch:A");
       a_state = 1;
     }
@@ -156,10 +160,15 @@ void routine_b ()
   //この20という数字が大きければ鈍感に、小さければ敏感になります
   //Default is 20
   if(ave > STD_TIME){
-    digitalWrite(4, HIGH);
-    Serial.println("touch:");
+    if(b_state == 0){
+      digitalWrite(4, HIGH);
+      Serial.println("touch:B");
+      b_state = 1;
+    }
+
   }else{
     digitalWrite(4, LOW);
+    b_state = 0;
   }
 
   //変数をずらす。
@@ -195,9 +204,15 @@ void routine_c ()
   //この20という数字が大きければ鈍感に、小さければ敏感になります
   //Default is 20
   if(ave > STD_TIME){
-    digitalWrite(3, HIGH);
-    Serial.println("touch");
+
+    if(c_state == 0){
+      digitalWrite(3, HIGH);
+      Serial.println("touch:C");
+      c_state = 1;
+    }
+
   }else{
+    c_state = 0;
     digitalWrite(3, LOW);
   }
 
@@ -235,10 +250,14 @@ void routine_d ()
   //この20という数字が大きければ鈍感に、小さければ敏感になります
   //Default is 20
   if(ave > STD_TIME){
-    digitalWrite(2, HIGH);
-    Serial.println("touch");
+    if(d_state == 0){
+      digitalWrite(2, HIGH);
+      Serial.println("touch:D");
+      d_state = 1;
+    }
   }else{
     digitalWrite(2, LOW);
+    d_state = 0;
   }
 
   //変数をずらす。

@@ -6,12 +6,19 @@
 // #With Alminium Sheet
 //ハイパスフィルタの変数
 //Default 10
-int const N = 10; //300
+int const N = 200; //100 , 10, 300
 
 //この20という数字が大きければ鈍感に、小さければ敏感になります
 //Default is 20
-int const STD_TIME = 7; //10
+int const STD_TIME = 5; //7, 10
 // 100, 5 is better?
+
+
+//For Storage LED condition
+int a_state;
+int b_state;
+int c_state;
+int d_state;
 
 
 //Curve of touch
@@ -33,7 +40,10 @@ void setup(){
 
   }
 
-
+  a_state = 0;
+  b_state = 0;
+  c_state = 0;
+  d_state = 0;
 
   Serial.begin(9600);
 
@@ -43,14 +53,14 @@ void setup(){
   pinMode(12,INPUT);
   //確認用LED
   pinMode(5, OUTPUT);
-  /*
+
   //IO for B
   //タッチパネル本体
   pinMode(11,OUTPUT);
   pinMode(10,INPUT);
   //確認用LED
   pinMode(4, OUTPUT);
-
+/*
   //IO for C
   //タッチパネル本体
   pinMode(9,OUTPUT);
@@ -70,7 +80,7 @@ void setup(){
 void loop(){
 
   routine_a();
-  /*routine_b();*/
+  routine_b();
 //  routine_c();
 //  routine_d();
 
@@ -104,9 +114,14 @@ void routine_a ()
   //Default is 20
   if(ave > STD_TIME){
     digitalWrite(5, HIGH);
-    Serial.println("touch:A");
+    if(a_state == 0){
+      Serial.println("touch:A");
+      a_state = 1;
+    }
+
   }else{
     digitalWrite(5, LOW);
+    a_state = 0;
   }
 
   //変数をずらす。
@@ -142,6 +157,7 @@ void routine_b ()
   //Default is 20
   if(ave > STD_TIME){
     digitalWrite(4, HIGH);
+    Serial.println("touch:");
   }else{
     digitalWrite(4, LOW);
   }

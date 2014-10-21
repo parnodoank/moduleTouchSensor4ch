@@ -167,10 +167,6 @@ void routine_a ()
   }
 
   //変数をずらす。
-  // for(int i=0; i<N-1; i++){
-  //   a[i+1] = a[i];
-  // }
-
   for(int i=(N-1); i>=0; i--){
     a[i] = a[i-1];    
   }
@@ -215,8 +211,8 @@ void routine_b ()
   }
 
   //変数をずらす。
-  for(int i=0; i<N-1; i++){
-    b[i+1] = b[i];
+  for(int i=(N-1); i>=0; i--){
+    b[i] = b[i-1];    
   }
 
 }
@@ -260,8 +256,8 @@ void routine_c ()
   }
 
   //変数をずらす。
-  for(int i=0; i<N-1; i++){
-    c[i+1] = c[i];
+  for(int i=(N-1); i>=0; i--){
+    c[i] = c[i-1];    
   }
 
 }
@@ -295,7 +291,7 @@ void routine_d ()
   if(ave > STD_TIME){
     if(d_state[0] == 0){
       digitalWrite(2, HIGH);
-      Serial.println("touch:D");
+      Serial.println("touch:D2");
       d_state[0] = 1;
     }
   }else{
@@ -304,8 +300,8 @@ void routine_d ()
   }
 
   //変数をずらす。
-  for(int i=0; i<N-1; i++){
-    d[i+1] = d[i];
+  for(int i=(N-1); i>=0; i--){
+    d[i] = d[i-1];    
   }
 
 }

@@ -6,7 +6,8 @@
 // #With Alminium Sheet
 //ハイパスフィルタの変数
 //Default 10
-int const N = 200; //100 , 10, 300
+int const N = 30; //200, 100 , 10, 300
+int const D = 25;//Log of State
 
 //この20という数字が大きければ鈍感に、小さければ敏感になります
 //Default is 20
@@ -15,10 +16,10 @@ int const STD_TIME = 5; //10
 
 
 //For Storage LED condition
-int a_state;
-int b_state;
-int c_state;
-int d_state;
+int a_state[D];
+int b_state[D];
+int c_state[D];
+int d_state[D];
 
 
 //Curve of touch
@@ -40,10 +41,6 @@ void setup(){
 
   }
 
-  a_state = 0;
-  b_state = 0;
-  c_state = 0;
-  d_state = 0;
 
   Serial.begin(9600);
 
@@ -82,10 +79,37 @@ void setup(){
 
 void loop(){
 
+// Serial.println("foo");
   routine_a();
   routine_b();
   routine_c();
   routine_d();
+
+}
+
+
+void log_a (int num){
+
+  for(int i=(D-1); i>=0; i--){
+
+    a_state[i] = a_state[i-1];    
+
+  }
+
+  a_state[0] = num;
+
+}
+
+int chk_untouch_a (){
+
+  int val = 0;
+  for(int i =0; i<D; i++){
+
+    val += a_state[i];
+
+  }
+
+  return val;
 
 }
 
@@ -117,23 +141,42 @@ void routine_a ()
   //Default is 20
   if(ave > STD_TIME){
 
-    if(a_state == 0){
+    if(a_state[0] == 0){
+      log_a(1); //Set the record
       digitalWrite(5, HIGH);
       Serial.println("touch:A");
-      a_state = 1;
     }
 
+    //   log_a(1); //Set the record
+    // if(chk_untouch_a() == D){
+    //   log_a(1); //Set the record
+    //   digitalWrite(5, HIGH);
+    //   Serial.println("touch:A");
+    // }
+
+
+
   }else{
-    digitalWrite(5, LOW);
-    a_state = 0;
+      // log_a(0); //Set the record
+        // digitalWrite(5, LOW);
+
+      log_a(0); //Set the record
+      if(chk_untouch_a()==0){
+        digitalWrite(5, LOW);
+      }
   }
 
   //変数をずらす。
-  for(int i=0; i<N-1; i++){
-    a[i+1] = a[i];
+  // for(int i=0; i<N-1; i++){
+  //   a[i+1] = a[i];
+  // }
+
+  for(int i=(N-1); i>=0; i--){
+    a[i] = a[i-1];    
   }
 
 }
+
 
 void routine_b ()
 {
@@ -160,15 +203,15 @@ void routine_b ()
   //この20という数字が大きければ鈍感に、小さければ敏感になります
   //Default is 20
   if(ave > STD_TIME){
-    if(b_state == 0){
+    if(b_state[0] == 0){
       digitalWrite(4, HIGH);
       Serial.println("touch:B");
-      b_state = 1;
+      b_state[0] = 1;
     }
 
   }else{
     digitalWrite(4, LOW);
-    b_state = 0;
+    b_state[0] = 0;
   }
 
   //変数をずらす。
@@ -205,14 +248,14 @@ void routine_c ()
   //Default is 20
   if(ave > STD_TIME){
 
-    if(c_state == 0){
+    if(c_state[0] == 0){
       digitalWrite(3, HIGH);
       Serial.println("touch:C");
-      c_state = 1;
+      c_state[0] = 1;
     }
 
   }else{
-    c_state = 0;
+    c_state[0] = 0;
     digitalWrite(3, LOW);
   }
 
@@ -250,14 +293,14 @@ void routine_d ()
   //この20という数字が大きければ鈍感に、小さければ敏感になります
   //Default is 20
   if(ave > STD_TIME){
-    if(d_state == 0){
+    if(d_state[0] == 0){
       digitalWrite(2, HIGH);
       Serial.println("touch:D");
-      d_state = 1;
+      d_state[0] = 1;
     }
   }else{
     digitalWrite(2, LOW);
-    d_state = 0;
+    d_state[0] = 0;
   }
 
   //変数をずらす。

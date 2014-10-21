@@ -100,6 +100,42 @@ void log_a (int num){
 
 }
 
+void log_b (int num){
+
+  for(int i=(D-1); i>=0; i--){
+
+    b_state[i] = b_state[i-1];    
+
+  }
+
+  b_state[0] = num;
+
+}
+
+void log_c (int num){
+
+  for(int i=(D-1); i>=0; i--){
+
+    c_state[i] = c_state[i-1];    
+
+  }
+
+  c_state[0] = num;
+
+}
+
+void log_d (int num){
+
+  for(int i=(D-1); i>=0; i--){
+
+    d_state[i] = d_state[i-1];    
+
+  }
+
+  d_state[0] = num;
+
+}
+
 int chk_untouch_a (){
 
   int val = 0;
@@ -112,6 +148,47 @@ int chk_untouch_a (){
   return val;
 
 }
+
+int chk_untouch_b (){
+
+  int val = 0;
+  for(int i =0; i<D; i++){
+
+    val += b_state[i];
+
+  }
+
+  return val;
+
+}
+
+int chk_untouch_c (){
+
+  int val = 0;
+  for(int i =0; i<D; i++){
+
+    val += c_state[i];
+
+  }
+
+  return val;
+
+}
+
+int chk_untouch_d (){
+
+  int val = 0;
+  for(int i =0; i<D; i++){
+
+    val += d_state[i];
+
+  }
+
+  return val;
+
+}
+
+
 
 void routine_a ()
 {
@@ -157,8 +234,6 @@ void routine_a ()
 
 
   }else{
-      // log_a(0); //Set the record
-        // digitalWrite(5, LOW);
 
       log_a(0); //Set the record
       if(chk_untouch_a()==0){
@@ -200,14 +275,18 @@ void routine_b ()
   //Default is 20
   if(ave > STD_TIME){
     if(b_state[0] == 0){
+      log_b(1);
       digitalWrite(4, HIGH);
       Serial.println("touch:B");
       b_state[0] = 1;
     }
 
   }else{
-    digitalWrite(4, LOW);
-    b_state[0] = 0;
+
+      log_b(0); //Set the record
+      if(chk_untouch_b()==0){
+        digitalWrite(4, LOW);
+      }
   }
 
   //変数をずらす。
@@ -245,15 +324,18 @@ void routine_c ()
   if(ave > STD_TIME){
 
     if(c_state[0] == 0){
+      log_c(1);
       digitalWrite(3, HIGH);
       Serial.println("touch:C");
       c_state[0] = 1;
     }
 
   }else{
-    c_state[0] = 0;
-    digitalWrite(3, LOW);
-  }
+
+    log_c(0); //Set the record
+    if(chk_untouch_c()==0){
+      digitalWrite(3, LOW);
+    }  }
 
   //変数をずらす。
   for(int i=(N-1); i>=0; i--){
@@ -290,13 +372,17 @@ void routine_d ()
   //Default is 20
   if(ave > STD_TIME){
     if(d_state[0] == 0){
+      log_d(1);
       digitalWrite(2, HIGH);
-      Serial.println("touch:D2");
+      Serial.println("touch:D");
       d_state[0] = 1;
     }
   }else{
-    digitalWrite(2, LOW);
-    d_state[0] = 0;
+
+    log_d(0); //Set the record
+    if(chk_untouch_d()==0){
+      digitalWrite(2, LOW);
+    }
   }
 
   //変数をずらす。

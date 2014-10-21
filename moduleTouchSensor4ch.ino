@@ -67,13 +67,13 @@ void setup(){
   //確認用LED
   pinMode(3, OUTPUT);
 
-/*
+
   //IO for D
   //タッチパネル本体
   pinMode(7,OUTPUT);
   pinMode(6,INPUT);
   //確認用LED
-  pinMode(2, OUTPUT);  */
+  pinMode(2, OUTPUT);  
 
 }
 
@@ -375,7 +375,7 @@ void routine_d ()
       log_d(1);
       digitalWrite(2, HIGH);
       Serial.println("touch:D");
-      d_state[0] = 1;
+      // d_state[0] = 1;
     }
   }else{
 

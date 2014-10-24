@@ -14,6 +14,8 @@ int const D = 25;//Log of State
 int const STD_TIME = 5; //10
 // 100, 5 is better?
 
+// ENUM for Serial Communicartion
+typedef enum {CH1_ON, CH2_ON, CH3_ON, CH4_ON} condition;
 
 //For Storage LED condition
 int a_state[D];
@@ -221,7 +223,7 @@ void routine_a ()
     if(a_state[0] == 0){
       log_a(1); //Set the record
       digitalWrite(5, HIGH);
-      Serial.println("touch:A");
+      Serial.println(CH1_ON);
     }
 
     //   log_a(1); //Set the record
@@ -277,7 +279,7 @@ void routine_b ()
     if(b_state[0] == 0){
       log_b(1);
       digitalWrite(4, HIGH);
-      Serial.println("touch:B");
+      Serial.println(CH2_ON);
       b_state[0] = 1;
     }
 
@@ -326,7 +328,7 @@ void routine_c ()
     if(c_state[0] == 0){
       log_c(1);
       digitalWrite(3, HIGH);
-      Serial.println("touch:C");
+      Serial.println(CH3_ON);
       c_state[0] = 1;
     }
 
@@ -374,7 +376,7 @@ void routine_d ()
     if(d_state[0] == 0){
       log_d(1);
       digitalWrite(2, HIGH);
-      Serial.println("touch:D");
+      Serial.println(CH4_ON);
       // d_state[0] = 1;
     }
   }else{

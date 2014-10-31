@@ -11,7 +11,7 @@ int const D = 25;//Log of State
 
 //この20という数字が大きければ鈍感に、小さければ敏感になります
 //Default is 20
-int const STD_TIME = 5; //10
+int const STD_TIME = 10; //5 //10
 // 100, 5 is better?
 
 // ENUM for Serial Communicartion

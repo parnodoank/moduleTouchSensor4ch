@@ -6,7 +6,7 @@
 // #With Alminium Sheet
 //ハイパスフィルタの変数
 //Default 10
-int const N = 30; //200, 100 , 10, 300
+int const N = 25; //200, 100 , 10, 300
 int const D = 25;//Log of State
 
 //この20という数字が大きければ鈍感に、小さければ敏感になります
